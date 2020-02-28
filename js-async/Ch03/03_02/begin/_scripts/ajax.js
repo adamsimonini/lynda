@@ -68,19 +68,31 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // get(url, successHandler, failHandler);
-  Promise.all([get(urls[0]), get(urls[1]), get(urls[2]), get(urls[3])])
-    .then(function(responses) {
-      return responses.map(function(response) {
-        return successHandler(response);
-      });
-    })
-    .then(function(literals) {
-      weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
-    })
-    .catch(function(status) {
-      failHandler(status);
-    })
-    .finally(function() {
-      weatherDiv.classList.remove('hidden');
-    });
+  // Promise.all([get(urls[0]), get(urls[1]), get(urls[2]), get(urls[3])])
+  //   .then(function(responses) {
+  //     return responses.map(function(response) {
+  //       return successHandler(response);
+  //     });
+  //   })
+  //   .then(function(literals) {
+  //     weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
+  //   })
+  //   .catch(function(status) {
+  //     failHandler(status);
+  //   })
+  //   .finally(function() {
+  //     weatherDiv.classList.remove('hidden');
+  //   });
+
+  // parenthesis around the function make it instantly invoked on complie
+  (async function() {
+    let responses = [];
+    responses.push(get(urls[0]));
+    responses.push(get(urls[1]));
+    responses.push(get(urls[2]));
+    responses.push(get(urls[3]));
+    let literals = responses.map(function(response) {
+      successHandler(response);
+    }
+  })();
 });

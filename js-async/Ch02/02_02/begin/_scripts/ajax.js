@@ -15,7 +15,7 @@ function get(url) {
         httpRequest.send();
     })
 };
-
+    
 function successHandler(data) {
     const dataObj = JSON.parse(data);
     const weatherDiv = document.querySelector('#weather');
