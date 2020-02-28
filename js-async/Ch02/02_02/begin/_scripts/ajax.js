@@ -1,21 +1,25 @@
-function get(url, success, fail) {
-    let httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', url);
-    httpRequest.onload = function() {
-        if (httpRequest.status === 200) {
-            success(httpRequest.responseText);
-        } else {
-            fail(httpRequest.status);
+function get(url) {
+    return new Promise((resolve, reject) => {
+        let httpRequest = new XMLHttpRequest();
+        httpRequest.open('GET', url);
+        httpRequest.onload = function() {
+            if (httpRequest.status === 200) {
+                resolve(httpRequest.responseText);
+            } else {
+                reject(Error(httpRequest.status));
+            }
         }
-    }
-    httpRequest.send();
+        httpRequest.onerror = () => {
+            reject(Error('Network Error'));
+        }
+        httpRequest.send();
+    })
 };
 
 function successHandler(data) {
     const dataObj = JSON.parse(data);
     const weatherDiv = document.querySelector('#weather');
-    const weatherFragment = `
-        <h1>Weather</h1>
+    const div = `
         <h2 class="top">
         <img
             src="http://openweathermap.org/img/w/${dataObj.weather[0].icon}.png"
@@ -28,14 +32,11 @@ function successHandler(data) {
         <span class="tempF">${tempToF(dataObj.main.temp)}&deg;</span> | ${dataObj.weather[0].description}
         </p>
     `
-    weatherDiv.innerHTML = weatherFragment;
-    weatherDiv.classList.remove('hidden');
+    return div
 }
 
 function failHandler(status) {
     console.log(status);
-    const weatherDiv = document.querySelector('#weather');
-    weatherDiv.classList.remove('hidden');
 }
 
 function tempToF(kelvin) {
@@ -44,7 +45,34 @@ function tempToF(kelvin) {
 
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = '58748f2a8d98a84d9e4428c1fa051d70';
-//    const apiKey = '';
-    const url = 'https://api.openweathermap.org/data/2.5/weather?q=los+angeles&APPID=' + apiKey;
-    get(url, successHandler, failHandler);
+    const weatherDiv = document.querySelector('#weather');
+
+    const locations = [
+        'los+angeles,us',
+        'san+francisco,us',
+        'lone+pine,us',
+        'mariposa,us'
+    ];
+
+    const urls = locations.map(location => {
+        return `https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=${apiKey}`;
+    })
+    // const apiKey = '';
+    // get(url, successHandler, failHandler);
+    // console.log(get(url));
+    Promise.all([get(urls[0]), get(urls[1]), get(urls[2]), get(urls[3])])
+        .then(responses => { //this equates to the resolve of the new Promise
+            return responses.map(response => {
+                return successHandler(response);
+            })
+        })
+        .then(literals => {
+            weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
+        })
+        .catch(status=> { // this equates to the rject of the new Promise
+            failHandler(status);
+        })
+        .finally( () => {
+            weatherDiv.classList.remove('hidden');
+        });
 });
