@@ -85,14 +85,16 @@ document.addEventListener('DOMContentLoaded', function() {
   //   });
 
   // parenthesis around the function make it instantly invoked on complie
-  (async function() {
+(async function() {
     let responses = [];
-    responses.push(get(urls[0]));
-    responses.push(get(urls[1]));
-    responses.push(get(urls[2]));
-    responses.push(get(urls[3]));
+    responses.push(await get(urls[0]));
+    responses.push(await get(urls[1]));
+    responses.push(await get(urls[2]));
+    responses.push(await get(urls[3]));
     let literals = responses.map(function(response) {
-      successHandler(response);
-    }
+      return successHandler(response);
+    });
+    weatherDiv.innerHTML = `<h1>Weather</h1>${literals.join('')}`;
+    weatherDiv.classList.remove('hidden');
   })();
 });
