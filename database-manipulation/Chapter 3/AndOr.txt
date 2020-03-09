@@ -1,0 +1,17 @@
+USE [H+Active]
+
+SELECT *
+FROM ProductListing
+WHERE Item LIKE '%t-shirt%' AND Who = 'Men';
+
+
+
+SELECT *
+FROM Customers
+WHERE State = 'FL' AND State = 'CA';
+
+
+
+SELECT *
+FROM Customers
+WHERE State = 'FL' OR State = 'CA';

@@ -1,0 +1,22 @@
+USE [H+Active]
+
+
+SELECT *
+FROM Customers
+-- reveals 16 individual customers. Some are from the same state
+
+SELECT State
+FROM Customers
+GROUP BY State
+-- reveals 1 record for each state
+
+SELECT State, COUNT(CustomerID) AS NumberOfCustomers
+FROM Customers
+GROUP BY State
+ORDER BY NumberOfCustomers DESC
+-- adds a new column that displays the aggregate count of customer ids in each state
+-- sorted in descending order based on the customer counts
+
+SELECT AVG(InvoiceTotal) AS AverageInvoice
+FROM InvoiceTotals
+-- finds the average dollar amount across all invoices

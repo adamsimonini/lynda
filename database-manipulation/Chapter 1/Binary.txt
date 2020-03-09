@@ -1,0 +1,15 @@
+-- alter ProductListing table to hold our binary data
+USE [H+Active]
+ALTER TABLE ProductListing
+ADD ProductImage varbinary(max) NULL;
+
+
+-- import an image into the binary column
+UPDATE ProductListing
+SET ProductImage = (SELECT * FROM OPENROWSET(BULK N'C:\ThermalVest.png', SINGLE_BLOB) as imagefile)
+WHERE ProductID = 14
+;
+
+SELECT *
+FROM ProductListing
+

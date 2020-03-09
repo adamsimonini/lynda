@@ -1,0 +1,11 @@
+USE [H+Active]
+
+SELECT *
+FROM Customers
+WHERE NOT State = 'FL';
+
+
+
+SELECT *
+FROM Customers
+WHERE NOT State = 'FL' AND NOT State = ‘CA’;

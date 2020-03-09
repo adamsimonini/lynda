@@ -1,0 +1,15 @@
+USE [H+Active]
+
+SELECT CustomerID
+FROM Customers
+INTERSECT
+SELECT CustomerID
+FROM Invoices;
+
+
+
+SELECT CustomerID
+FROM Customers
+EXCEPT
+SELECT CustomerID
+FROM Invoices;

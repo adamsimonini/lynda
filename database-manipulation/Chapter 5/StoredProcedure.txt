@@ -1,0 +1,24 @@
+-- insert between BEGIN and END lines in the Stored Procedure
+
+SELECT Color, SUM(Quantity) AS QuantitySold
+FROM LineItemDetails
+GROUP BY Color
+ORDER BY QuantitySold DESC
+
+
+
+/* example ----------
+
+
+CREATE PROCEDURE ColorPopularity
+AS
+BEGIN
+    SELECT Color, SUM(Quantity) AS QuantitySold
+    FROM LineItemDetails
+    GROUP BY Color
+    ORDER BY QuantitySold DESC
+END
+
+
+
+--------- */

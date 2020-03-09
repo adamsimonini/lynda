@@ -1,0 +1,14 @@
+USE [H+Active]
+
+SELECT Date, CAST(Date AS char(50)) AS TextDate
+FROM Invoices;
+
+
+SELECT Date, CONVERT(char(50), Date, 101) AS TextDate
+FROM Invoices;
+
+
+SELECT Price, CONVERT(char(10), Price*1000, 1) AS TextPrice
+FROM ProductListing;
+
+

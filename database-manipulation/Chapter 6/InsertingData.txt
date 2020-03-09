@@ -1,0 +1,10 @@
+USE [H+Active]
+
+-- insert a record into the customers table and a related record into invoices
+
+INSERT INTO Customers (FirstName, LastName, Phone, Address, City, State, Zip)
+VALUES ('Simone','Fields','(360)555-0144','501 E Normandy','Bellingham','WA','98225');
+
+
+INSERT INTO Invoices (CustomerID, Date)
+VALUES (SCOPE_IDENTITY(), GETDATE())

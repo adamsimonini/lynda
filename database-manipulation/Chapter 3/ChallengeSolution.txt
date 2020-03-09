@@ -1,0 +1,11 @@
+USE [H+Active]
+
+
+-- find the invoices above $150 placed in the month of February, 2015
+
+SELECT *
+FROM    InvoiceTotals INNER JOIN
+        Invoices ON InvoiceTotals.InvoiceID = Invoices.InvoiceID INNER JOIN
+        Customers ON Invoices.CustomerID = Customers.CustomerID
+WHERE   InvoiceTotal > 150 AND
+        Date BETWEEN '2-1-2015' AND '2-28-2015'
