@@ -1,8 +1,0 @@
-USE [H+Active]
-
-SELECT FirstName, LastName, 'customer' as PersonType
-FROM Customers
-UNION
-SELECT FirstName, LastName, 'employee' as PersonType
-FROM Employees
-ORDER BY LastName

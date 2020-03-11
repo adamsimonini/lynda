@@ -1,5 +1,0 @@
-USE [H+Active]
-
-SELECT *
-FROM Customers INNER JOIN Invoices ON Customers.CustomerID = Invoices.CustomerID
-ORDER BY Invoices.Date DESC, Customers.LastName
